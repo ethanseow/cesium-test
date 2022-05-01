@@ -1,14 +1,18 @@
 const serverDebug = require('debug')('server')
 const express = require("express");
 const app = express()
+const homeRouters = require('./routes/home');
 require('dotenv').config()
+
+app.use(express.static('public'))
+
 const { spawn } = require('child_process')
 
 const PORT = process.env.PORT
-
+/*
 app.get('/',(req,res,next) => {
     let msg = ''
-    const python = spawn('python',['script.py'])
+    const python = spawn('python',['script.py',data])
 
     python.stdout.on('data',(data) => {
         msg = data.toString()
@@ -20,8 +24,10 @@ app.get('/',(req,res,next) => {
     python.on('close',()=>{
         res.send({message:msg})
     })
-    
 })
+*/
+app.use('/',homeRouters)
+
 
 app.listen(PORT, (error)=>{
     if(error){

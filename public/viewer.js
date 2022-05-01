@@ -3,5 +3,5 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
 });
 viewer.dataSources.add(
   // get czml file for display
-  Cesium.CzmlDataSource.load("./simple.czml")
+  Cesium.CzmlDataSource.load("/simple.czml")
 );
