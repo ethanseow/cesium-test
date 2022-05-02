@@ -9,5 +9,19 @@ satelliteInputs.onsubmit = (e) => {
 
     // think about fetch and how the site would update its simple.czml file
     viewer.dataSources.removeAll()
-
+    const headers = new Headers({
+        'Content-Type':'application/json',
+    });
+    const body = JSON.stringify({dummy1:dummy1,dummy2:dummy2,dummy3:dummy3})
+    fetch('/satellite',{
+        method:'POST',
+        headers:headers,
+        body:body
+    })
+    .then(response => response.json())
+    .then((data)=> {
+        console.log(data)
+        const newCzml = Cesium.CzmlDataSource.load(data.czml);
+        viewer.dataSources.add(newCzml);
+    })
 }
