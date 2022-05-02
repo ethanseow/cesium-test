@@ -27,7 +27,9 @@ app.get('/',(req,res,next) => {
 })
 */
 app.use('/',homeRouters)
+app.get('/satellite',(req,res,next) => {
 
+})
 
 app.listen(PORT, (error)=>{
     if(error){
