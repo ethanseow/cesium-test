@@ -46,23 +46,6 @@ const dummyCzml = [
     },
   },
 ];
-/*
-app.get('/',(req,res,next) => {
-    let msg = ''
-    const python = spawn('python',['script.py',data])
-
-    python.stdout.on('data',(data) => {
-        msg = data.toString()
-        serverDebug(msg)
-    })
-    python.stderr.on('error',(error)=>{
-        serverDebug(error)
-    })
-    python.on('close',()=>{
-        res.send({message:msg})
-    })
-})
-*/
 app.use('/',homeRouters)
 app.post('/satellite',(req,res,next) => {
     const {dummy1, dummy2, dummy3} = req.body
