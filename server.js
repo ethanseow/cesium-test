@@ -1,4 +1,3 @@
-const serverDebug = require('debug')('server')
 const express = require("express");
 const app = express()
 const homeRouters = require('./routes/home');

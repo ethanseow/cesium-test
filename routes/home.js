@@ -1,6 +1,5 @@
 const express = require('express');
 const routers = express.Router()
-const homeRouterDebug = require('debug')('homeRouter')
 const path = require('path')
 
 routers.get(['/','/home'], (req,res,next) => {
