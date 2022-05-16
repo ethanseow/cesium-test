@@ -21,7 +21,7 @@ satelliteInputs.onsubmit = (e) => {
     .then(response => response.json())
     .then((data)=> {
         console.log(data)
-        const newCzml = Cesium.CzmlDataSource.load(data.czml);
-        viewer.dataSources.add(newCzml);
+        //const newCzml = Cesium.CzmlDataSource.load(data.czml);
+        //viewer.dataSources.add(newCzml);
     })
 }
