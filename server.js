@@ -5,7 +5,7 @@ const homeRouters = require('./routes/home');
 require('dotenv').config()
 app.use(express.json())
 app.use(express.static('public'))
-const { spawn } = require('child_process')
+const { spawn,exec } = require('child_process')
 const PORT = process.env.PORT
 
 const dummyCzml = [
@@ -47,16 +47,41 @@ const dummyCzml = [
 ];
 app.use('/',homeRouters)
 app.post('/satellite',(req,res,next) => {
-    const {dummy1, dummy2, dummy3} = req.body
+    console.log('received a message');
+    //const conda = spawn('conda run',['-n test','python ./Satlib/walker_script.py'])
+    exec('conda run python ./Satlib/walker_script.py',(error,stdout,stderr)=>{
+      console.log(`Error:${error}`)
+      console.log(`Stdout:${stdout}`)
+      console.log(`Stderr:${stderr}`)
+    })
+    /*
+    const python = spawn('python',['./SatLib/walker_script.py'])
+    python.stdout.on('data', function(data) {
+      console.log(data.toString()); 
+    });
+
+    python.stderr.on('data', function(data) {
+        console.error(data.toString());
+    });
+    
+    conda.stdout.on('data', function(data) {
+      console.log(data.toString()); 
+    });
+
+    conda.stderr.on('data', function(data) {
+        console.error(data.toString());
+    });
+    
     let msg = ''
     console.log(req.body)
-    const python = spawn('python',['script.py',dummy1,dummy2,dummy3])
+    const python = spawn('python',['script.py', JSON.stringify(req.body)])
     python.stdout.on('data',(data) => {
         msg = data.toString()
     })
     python.on('close',()=>{
         res.json({msg:msg,czml:dummyCzml})
     })
+    */
 })
 
 app.listen(PORT, (error)=>{
