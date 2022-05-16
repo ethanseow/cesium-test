@@ -49,7 +49,7 @@ app.use('/',homeRouters)
 app.post('/satellite',(req,res,next) => {
     console.log('received a message');
     //const conda = spawn('conda run',['-n test','python ./Satlib/walker_script.py'])
-    exec('conda run python walker_script.py',(error,stdout,stderr)=>{
+    exec('python walker_script.py',(error,stdout,stderr)=>{
       console.log(`Error:${error}`)
       console.log(`Stdout:${stdout}`)
       console.log(`Stderr:${stderr}`)

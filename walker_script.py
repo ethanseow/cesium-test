@@ -1,9 +1,9 @@
 import os
-import satbox as sb
-import orbitalMechanics as om
-import utils as utils
+#import satbox as sb
+#import orbitalMechanics as om
+#import utils as utils
 from poliastro.czml.extract_czml import CZMLExtractor
-import CZMLExtractor_MJD as CZMLExtractor_MJD
+#import CZMLExtractor_MJD as CZMLExtractor_MJD
 import numpy as np
 from poliastro import constants
 from poliastro.earth import Orbit
@@ -25,10 +25,10 @@ from poliastro.plotting import OrbitPlotter3D, OrbitPlotter2D
 from poliastro.twobody.events import(NodeCrossEvent,)
 import seaborn as sns
 from astropy.coordinates import EarthLocation, GCRS, ITRS, CartesianRepresentation, SkyCoord
-import comms as com
+#import comms as com
 from copy import deepcopy
 import dill
-import Interval_Finder as IF 
+#import Interval_Finder as IF 
 import sys
 import json
 """
