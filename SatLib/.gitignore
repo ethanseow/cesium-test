@@ -1,0 +1,6 @@
+__pycache__/*
+*.pyc
+*.cpython-38.pyc
+*sublime-workspace
+deprecated/*
+.ipynb_checkpoints/*
