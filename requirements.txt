@@ -137,4 +137,3 @@ widgetsnbextension==3.5.1
 xlrd==2.0.1
 yapf==0.30.0
 zipp==3.4.0
-Cartopy==0.20.0
