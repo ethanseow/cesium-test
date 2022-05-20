@@ -54,7 +54,11 @@ app.post('/satellite',(req,res,next) => {
       console.log(`Stdout:${stdout}`)
       console.log(`Stderr:${stderr}`)
 
-      res.json(stdout)
+      res.json({
+        stdout:stdout,
+        error:error,
+        stderr:stderr
+      })
     })
     /*
     const python = spawn('python',['./SatLib/walker_script.py'])
