@@ -11,7 +11,7 @@ from poliastro.core.perturbations import J2_perturbation
 from poliastro.util import norm
 # from poliastro.frames.equatorial import GCRS
 from poliastro.czml.extract_czml import CZMLExtractor
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from poliastro.plotting.static import StaticOrbitPlotter
 from poliastro.plotting import OrbitPlotter3D, OrbitPlotter2D
 from poliastro.twobody.events import(
@@ -19,7 +19,7 @@ from poliastro.twobody.events import(
 )
 # import cartopy.crs as ccrs
 
-import seaborn as sns
+#import seaborn as sns
 import astropy.units as u
 import astropy
 from astropy.time import Time, TimeDelta
@@ -881,7 +881,7 @@ class SimConstellation():
 
 
 # Plane class
-class Plane():
+class Plane:
     """
     Defines an orbital plane object that holds a set of satellite objects
     """
@@ -2396,7 +2396,7 @@ class DataAccessSat():
         self.accessMask = accessMask
         self.accessIntervalLengths = intervalLengths
         self.accessElevations = ele
-        
+       
     def plot_tombstone(self):
         """
         plots tombstone plot

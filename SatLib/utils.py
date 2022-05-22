@@ -19,7 +19,7 @@ from poliastro.core.propagation import func_twobody
 from poliastro.bodies import Earth
 from poliastro.czml.extract_czml import CZMLExtractor
 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 def find_non_dominated_time_deltaV(flatArray):
     """

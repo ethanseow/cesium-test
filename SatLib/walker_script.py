@@ -1,9 +1,10 @@
+"""
 import os
-#import satbox as sb
-#import orbitalMechanics as om
-#import utils as utils
+import satbox as sb
+import orbitalMechanics as om
+import utils as utils
 from poliastro.czml.extract_czml import CZMLExtractor
-#import CZMLExtractor_MJD as CZMLExtractor_MJD
+import CZMLExtractor_MJD as CZMLExtractor_MJD
 import numpy as np
 from poliastro import constants
 from poliastro.earth import Orbit
@@ -23,26 +24,34 @@ import matplotlib.pyplot as plt
 from poliastro.plotting.static import StaticOrbitPlotter
 from poliastro.plotting import OrbitPlotter3D, OrbitPlotter2D
 from poliastro.twobody.events import(NodeCrossEvent,)
-#import seaborn as sns
+import seaborn as sns
 from astropy.coordinates import EarthLocation, GCRS, ITRS, CartesianRepresentation, SkyCoord
-#import comms as com
+import comms as com
 from copy import deepcopy
 import dill
-#import Interval_Finder as IF 
+import Interval_Finder as IF 
 import sys
 import json
 """
+
+import satbox as sb
+import sys
+import json
+import Interval_Finder as IF
+import astropy.units as u
+
+
 #User inputs
 userInputs = sys.argv[1]
-input_dict = json.loads(userInputs)
+input_dict = json.loads(sys.argv[1])
 
 # Visualizing walker constellation and isl
-i = input_dict['i'] *u.deg
-t = input_dict['t'] 
-p = input_dict['p']
-f = input_dict['f']
-alt = input_dict['alt'] *u.km
-dist_threshold = input_dict['dist_threshold']
+i = float(input_dict['i']) * u.deg
+t = int(input_dict['t'])
+p = int(input_dict['p'])
+f = float(input_dict['f'])
+alt = float(input_dict['alt']) *u.km
+dist_threshold = float(input_dict['dist_threshold'])
     
 walker = sb.Constellation.from_walker(i, t, p, f, alt)
 t2propagate = 1 * u.day
@@ -56,7 +65,5 @@ L_avail = IF.get_availability_ISL(satellites, relative_position_data_ISL)
 L_poly = IF.get_polyline_ISL(satellites, relative_position_data_ISL)
 
 # Generating czml file
-file = walker.generate_czml_file(prop_duration=1,sample_points=100, satellites=satellites, L_avail=L_avail, L_poly=L_poly, show_polyline_isl=True)
+file = walker.generate_czml_file(prop_duration=1,sample_points=100, satellites=satellites, L_avail_ISL=L_avail, L_poly_ISL=L_poly, show_polyline_ISL=True)
 print(file)
-"""
-print('hello world')
