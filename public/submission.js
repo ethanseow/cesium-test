@@ -3,16 +3,19 @@ const satelliteInputs = document.forms['satelliteInputs']
 satelliteInputs.onsubmit = (e) => {
     e.preventDefault()
     // change dummy variables to actual data later
-    const dummy1 = satelliteInputs.elements['dummy1'].value
-    const dummy2 = satelliteInputs.elements['dummy2'].value
-    const dummy3 = satelliteInputs.elements['dummy3'].value
+    const i = satelliteInputs.elements['i'].value
+    const p = satelliteInputs.elements['p'].value
+    const t = satelliteInputs.elements['t'].value
+    const alt = satelliteInputs.elements['alt'].value
+    const f = satelliteInputs.elements['f'].value
+    const dist_threshold = satelliteInputs.elements['dist_threshold'].value
 
     // think about fetch and how the site would update its simple.czml file
     viewer.dataSources.removeAll()
     const headers = new Headers({
         'Content-Type':'application/json',
     });
-    const body = JSON.stringify({dummy1:dummy1,dummy2:dummy2,dummy3:dummy3})
+    const body = JSON.stringify({walkerParams:{i:i, t:t,p:p,alt:alt,f:f, dist_threshold:dist_threshold}})
     fetch('/satellite',{
         method:'POST',
         headers:headers,
@@ -21,7 +24,7 @@ satelliteInputs.onsubmit = (e) => {
     .then(response => response.json())
     .then((data)=> {
         console.log(data)
-        //const newCzml = Cesium.CzmlDataSource.load(data.czml);
-        //viewer.dataSources.add(newCzml);
+        const newCzml = Cesium.CzmlDataSource.load(data.czml);
+        viewer.dataSources.add(newCzml);
     })
 }

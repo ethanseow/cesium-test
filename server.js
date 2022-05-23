@@ -47,9 +47,22 @@ const dummyCzml = [
 ];
 app.use('/',homeRouters)
 app.post('/satellite',(req,res,next) => {
-    console.log('received a message');
     //const conda = spawn('conda run',['-n test','python ./Satlib/walker_script.py'])
-    exec('python ./SatLib/walker_script.py',(error,stdout,stderr)=>{
+    const parseBody = (json) => {
+      let stringifiedJSON = JSON.stringify(json)
+      let ret = ''
+      for(var i = 0;i < stringifiedJSON.length;i++){
+        if (stringifiedJSON[i] == '"'){
+          ret += "\\"
+        }
+        ret += stringifiedJSON[i]
+      }
+    }
+    const preprocessedParams = parseBody(req.body.walkerParams)
+    const command = `python ./SatLib/walker_script.py \'${preprocessedParams}\'`
+    console.log(command);
+    /*
+    exec(command,(error,stdout,stderr)=>{
       console.log(`Error:${error}`)
       console.log(`Stdout:${stdout}`)
       console.log(`Stderr:${stderr}`)
@@ -60,6 +73,7 @@ app.post('/satellite',(req,res,next) => {
         stderr:stderr
       })
     })
+    */
     /*
     const python = spawn('python',['./SatLib/walker_script.py'])
     python.stdout.on('data', function(data) {
