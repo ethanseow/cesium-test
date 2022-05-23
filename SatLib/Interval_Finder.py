@@ -28,7 +28,6 @@ from astropy.coordinates import EarthLocation, GCRS, ITRS, CartesianRepresentati
 import comms as com
 from copy import deepcopy
 import dill
-import Interval_Finder as IF 
 import sys
 
 

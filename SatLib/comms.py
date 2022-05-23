@@ -70,15 +70,17 @@ def footprintLength(nu, ele, alt, bw, unit = 'km', re = 6378.1e3):
     re: radius of the central body. Earth is default at 6371 km 
     Outputs:
     fpLength: footprint length in unit specified by 'unit' input
-    """
-    if unit == 'km':
-    	K_l = 111.319543
+"""
+    if unit =='km':
+        return 1
+    if unit == 'km': 
+        K_l = 111.319543
     elif unit == 'd':
-    	K_l = 1
+        K_l = 1
     elif unit =='nmi':
-    	K_l = 60.1077447
+        K_l = 60.1077447
     else:
-    	print("input for 'uni' must be 'deg', 'km', or 'nmi'")
+        print("input for 'uni' must be 'deg', 'km', or 'nmi'")
 
     lam_fo = ECA_fromNadirEle(nu, ele)  
     nu_heel = nu - bw   
@@ -87,8 +89,6 @@ def footprintLength(nu, ele, alt, bw, unit = 'km', re = 6378.1e3):
     lam_fi = ECA_fromNadirEle(nu_heel, e_heel)
     fpLength = K_l * (np.rad2deg(lam_fo) - np.rad2deg(lam_fi))
     return fpLength
-
-
 def slantRange_fromAltECA(alt, lam, re = poliastro.constants.general.R_earth):
 	"""
 	Gets relevant slant range angles if given altitude and earth central angle (ECA). 
