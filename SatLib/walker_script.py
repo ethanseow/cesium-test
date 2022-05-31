@@ -43,7 +43,7 @@ import astropy.units as u
 
 #User inputs
 userInputs = sys.argv[1]
-input_dict = json.loads(sys.argv[1])
+input_dict = json.loads(userInputs)
 
 # Visualizing walker constellation and isl
 i = float(input_dict['i']) * u.deg
