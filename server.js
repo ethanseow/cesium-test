@@ -1,54 +1,20 @@
-const express = require("express");
+const express = require('express');
 const app = express()
+const Queue = require('bull')
+
+const { exec } = require('child_process')
+
 const homeRouters = require('./routes/home');
-const fs = require('fs')
-require('dotenv').config()
-app.use(express.json())
-app.use(express.static('public'))
-const { spawn,exec } = require('child_process')
-const PORT = process.env.PORT
-const str = "\\"
-const dummyCzml = [
-  {
-    id: "document",
-    name: "CZML Geometries: Rectangle",
-    version: "1.0",
-  },
-  {
-    rectangle: {
-      coordinates: {
-        wsenDegrees: [-120, 40, -110, 50],
-      },
-      fill: true,
-      material: {
-        solidColor: {
-          color: {
-            rgba: [255, 0, 0, 255],
-          },
-        },
-      },
-    },
-  },
-  {
-    rectangle: {
-      coordinates: {
-        wsenDegrees: [-110, 40, -100, 50],
-      },
-      fill: true,
-      material: {
-        solidColor: {
-          color: {
-            rgba: [0, 0, 255, 255],
-          },
-        },
-      },
-    },
-  },
-];
-app.use('/',homeRouters)
-app.post('/satellite',(req,res,next) => {
-    console.log('received a post request')
-    //const conda = spawn('conda run',['-n test','python ./Satlib/walker_script.py'])
+
+const PORT = process.env.PORT || 3000
+const REDIS_URL = process.env.REDIS_URL || '127.0.0.1:6379'
+
+let workQueue = Queue(REDIS_URL)
+
+let db = {}
+
+workQueue.process((job,done)=>{
+    const { walkerParams, czmlId } = job.data
     const parseBody = (json) => {
       console.log(json)
       let stringifiedJSON = JSON.stringify(json)
@@ -61,68 +27,54 @@ app.post('/satellite',(req,res,next) => {
       }
       return ret
     }
-    const preprocessedParams = parseBody(req.body.walkerParams)
+    const preprocessedParams = parseBody(walkerParams)
+
+    // change to run walker script
     const command = `python ./SatLib/walker_script.py ${preprocessedParams}`
-    console.log(command);
-    /*
-    fs.readFile('./public//czml.txt','utf-8',(err,data) => {
-          if(err){
-            console.log('err')
-            return
-          }
-          res.json({
-            stdout:data,
-            error:'',
-            stderr:''
-          })
-      })
-    */
+    //done(null,{'stdout':'stdout here', 'stderr':'stderr here', 'error':'error here'})
+     
     exec(command,(error,stdout,stderr)=>{
-      console.log(`Error:${error}`)
-      console.log(`Stdout:${stdout}`)
-      console.log(`Stderr:${stderr}`)
-      /*
-      fs.writeFile('./czml.txt',stdout, err => {
-          if(err){
-            console.log('err')
-            return
-          }
-      })
-      */
-      res.json({
-        stdout:stdout,
-        error:error,
-        stderr:stderr
-      })
+        console.log(`Error:${error}`)
+        console.log(`Stdout:${stdout}`)
+        console.log(`Stderr:${stderr}`)
+        done(null,{
+            czmlId:czmlId,
+            'stdout':stdout,
+            'error':error,
+            'stderr':stderr
+        });
     })
-    /*
-    const python = spawn('python',['./SatLib/walker_script.py'])
-    python.stdout.on('data', function(data) {
-      console.log(data.toString()); 
-    });
-
-    python.stderr.on('data', function(data) {
-        console.error(data.toString());
-    });
     
-    conda.stdout.on('data', function(data) {
-      console.log(data.toString()); 
-    });
+});
 
-    conda.stderr.on('data', function(data) {
-        console.error(data.toString());
-    });
-    
-    let msg = ''
-    console.log(req.body)
-    const python = spawn('python',['script.py', JSON.stringify(req.body)])
-    python.stdout.on('data',(data) => {
-        msg = data.toString()
-    })
-    python.on('close',()=>{
-        res.json({msg:msg,czml:dummyCzml})
-    })
-    */
+workQueue.on('completed',(job,result)=>{
+
+    const { czmlId, czmlData } = result
+    // console.log(result);
+    db = {...db, [czmlId]:czmlData}
+});
+
+app.use(express.json())
+app.use(express.static('public'))
+
+app.use('/',homeRouters)
+
+app.post('/test-exec', (req,res,next)=>{
+    console.log('received a request')
+    const walkerParams = req.body.walkerParams
+    // 65 - 122, 0 - 9
+    const czmlId = `${Math.floor(Math.random() * 58) + 65}_${Math.floor(Math.random() * 10)}`
+    const job = workQueue.add({walkerParams:walkerParams,czmlId:czmlId})
+    res.send({czmlId:czmlId})
+})
+
+app.get('/jobs/:id',(req,res,next) => {
+    const{id} = req.params
+    if(db.hasOwnProperty(id)){
+        res.send({finishedProcessing:true,czmlData:db[id]});
+    }else{
+        res.send({finishedProcessing:false})
+    }
 })
 
 app.listen(PORT, (error)=>{
