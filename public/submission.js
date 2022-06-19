@@ -47,6 +47,6 @@ const getCzmlatInterval = (id) => {
             }else{
                 console.log('waiting')
             }
-        },2500)
-    })
+        })
+    },2500)
 }
