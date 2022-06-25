@@ -1,13 +1,14 @@
-const {db} = require('./server')
+const { createNewObject } = require('./singleton')
 const Queue = require('bull')
 
 const { exec } = require('child_process')
 
-const REDIS_URL = process.env.REDIS_URL || '127.0.0.1:6379'
+const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
 
 
-let workQueue = Queue(REDIS_URL)
+let workQueue = Queue('q','redis://:pd2db1123d511c70d30804d48fc934ec3b6a064e770ff84154b16af4212d1e0c6@ec2-18-210-137-167.compute-1.amazonaws.com:7880')
 workQueue.process((job,done)=>{
+    console.log('job added')
     const { walkerParams, czmlId } = job.data
     const parseBody = (json) => {
       console.log(json)
@@ -23,9 +24,8 @@ workQueue.process((job,done)=>{
     }
     const preprocessedParams = parseBody(walkerParams)
 
-    // change to run walker script
     const command = `python ./SatLib/walker_script.py ${preprocessedParams}`
-    // done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
+    //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     
     exec(command,(error,stdout,stderr)=>{
         console.log(`Error:${error}`)
@@ -45,6 +45,7 @@ workQueue.process((job,done)=>{
 workQueue.on('completed',(job,result)=>{
 
     const { czmlId, czmlData } = result
+    console.log('completed in server side')
     // console.log(result);
-    db = {...db, [czmlId]:czmlData}
+    createNewObject(czmlId,czmlData)
 });
