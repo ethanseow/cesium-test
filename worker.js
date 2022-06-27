@@ -6,7 +6,7 @@ const { exec } = require('child_process')
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
 
 
-let workQueue = Queue('q','redis://:pd2db1123d511c70d30804d48fc934ec3b6a064e770ff84154b16af4212d1e0c6@ec2-18-210-137-167.compute-1.amazonaws.com:7880')
+let workQueue = Queue(REDIS_URL)
 workQueue.process((job,done)=>{
     console.log('job added')
     const { walkerParams, czmlId } = job.data
@@ -28,9 +28,6 @@ workQueue.process((job,done)=>{
     //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     
     exec(command,(error,stdout,stderr)=>{
-        console.log(`Error:${error}`)
-        console.log(`Stdout:${stdout}`)
-        console.log(`Stderr:${stderr}`)
         done(null,{
             czmlId:czmlId,
             czmlData:stdout,
@@ -45,7 +42,12 @@ workQueue.process((job,done)=>{
 workQueue.on('completed',(job,result)=>{
 
     const { czmlId, czmlData } = result
+
     console.log('completed in server side')
-    // console.log(result);
+    console.log(czmlId);
+    console.log(czmlData)
+
+    // czmlData exists in result obj, but not creating new object
+    // perhaps has to do with different database?
     createNewObject(czmlId,czmlData)
 });

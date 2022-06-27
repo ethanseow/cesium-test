@@ -8,6 +8,7 @@ const express = require('express');
 const app = express()
 const Queue = require('bull')
 const { getDbObject, createNewObject } = require('./singleton')
+require('dotenv').config()
 const redis = require("redis");
 const client = redis.createClient({url: process.env.REDIS_URL});
 
@@ -29,7 +30,7 @@ const PORT = process.env.PORT || 3000
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
 
-let workQueue = Queue('q','redis://:pd2db1123d511c70d30804d48fc934ec3b6a064e770ff84154b16af4212d1e0c6@ec2-18-210-137-167.compute-1.amazonaws.com:7880')
+let workQueue = Queue(REDIS_URL)
 app.use(express.json())
 app.use(express.static('public'))
 
