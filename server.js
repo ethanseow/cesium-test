@@ -10,12 +10,14 @@ tls unauthorized is false for redis connection
 parameters are really weird for ioredis - REDISURL,{tls:{rejectUnauthorized:false}}
 Queue(queueName needed to talk with worker in constructor, {connection: ioRedisConnection})
 
-await queue.add(needQueueName, {data})
+await queue.add(needJobName, {data})
+
+in heroku remote by default we can see process.env.{} but in local we need to first require the dotenv package
 */
 
 const express = require('express');
 const app = express()
-const {Queue} = require('bullmq')
+const {Worker, Queue} = require('bullmq')
 const Redis = require('ioredis')
 const { getDbObject, createNewObject } = require('./singleton')
 require('dotenv').config()
@@ -45,6 +47,7 @@ const redisConnection =  new Redis(
     REDIS_URL,{tls:{rejectUnauthorized:false}}
 )
 const queue =  new Queue('python-queue',{connection:redisConnection})
+const worker = new Worker('python-queue',async (job) =>{},{connection:redisConnection})
 app.use(express.json())
 app.use(express.static('public'))
 
