@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 3000
 
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
-
+console.log(REDIS_URL)
 let workQueue = Queue(REDIS_URL)
 app.use(express.json())
 app.use(express.static('public'))
