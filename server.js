@@ -2,6 +2,9 @@
 run ubuntu server if local - run heroku redis:cli if
 run heroku local to run both server and worker
 make sure that we are in cesium conda
+
+make sure that you have scaled the dynos
+make sure that you have put python nodejs in buildpack (heroku buildpack) and commit and push to master
 */
 
 const express = require('express');
