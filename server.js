@@ -47,7 +47,6 @@ const redisConnection =  new Redis(
     REDIS_URL,{tls:{rejectUnauthorized:false}}
 )
 const queue =  new Queue('python-queue',{connection:redisConnection})
-const worker = new Worker('python-queue',async (job) =>{},{connection:redisConnection})
 app.use(express.json())
 app.use(express.static('public'))
 
