@@ -33,7 +33,7 @@ const worker = new Worker('python-queue' ,async (job)=>{
     const command = `python ./SatLib/walker_script.py ${preprocessedParams}`
     //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     console.log(command)
-    await exec(command,(error,stdout,stderr)=>{
+    exec(command,(error,stdout,stderr)=>{
       console.log(stdout)
       console.log(czmlId)
       console.log(stderr)
