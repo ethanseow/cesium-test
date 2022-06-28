@@ -34,9 +34,9 @@ const worker = new Worker('python-queue' ,async (job)=>{
     //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     console.log(command)
     await exec(command,(error,stdout,stderr)=>{
-      console.log(stdout)
-      console.log(czmlId)
-      console.log(stderr)
+      //console.log(stdout)
+      //console.log(czmlId)
+      //console.log(stderr)
         return({
             czmlId:czmlId,
             czmlData:stdout,
@@ -50,8 +50,8 @@ worker.on('completed',async(job,result)=>{
     const { czmlId, czmlData } = result
 
     console.log('completed in server side')
-    console.log(czmlId);
-    console.log(czmlData)
+    //console.log(czmlId);
+    //console.log(czmlData)
 
     // czmlData exists in result obj, but not creating new object
     // perhaps has to do with different database?
