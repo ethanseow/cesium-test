@@ -5,17 +5,24 @@ make sure that we are in cesium conda
 
 make sure that you have scaled the dynos
 make sure that you have put python nodejs in buildpack (heroku buildpack) and commit and push to master
+
+tls unauthorized is false for redis connection
+parameters are really weird for ioredis - REDISURL,{tls:{rejectUnauthorized:false}}
+Queue(queueName needed to talk with worker in constructor, {connection: ioRedisConnection})
+
+await queue.add(needQueueName, {data})
 */
 
 const express = require('express');
 const app = express()
-const Queue = require('bull')
+const {Queue} = require('bullmq')
+const Redis = require('ioredis')
 const { getDbObject, createNewObject } = require('./singleton')
 require('dotenv').config()
-const redis = require("redis");
-const client = redis.createClient({url: process.env.REDIS_URL});
+//const redis = require("redis");
+//const client = redis.createClient({url: process.env.REDIS_URL});
 
-
+/*
 client.on('ready',()=>{
     console.log('redis server is ready')
 })
@@ -23,6 +30,7 @@ client.on('ready',()=>{
 client.on('error',(err)=>{
     console.log(err)
 })
+*/
 
 const { exec } = require('child_process')
 
@@ -33,7 +41,10 @@ const PORT = process.env.PORT || 3000
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
 console.log(REDIS_URL)
-let workQueue = Queue(REDIS_URL)
+const redisConnection =  new Redis(
+    REDIS_URL,{tls:{rejectUnauthorized:false}}
+)
+const queue =  new Queue('python-queue',{connection:redisConnection})
 app.use(express.json())
 app.use(express.static('public'))
 
@@ -44,7 +55,7 @@ app.post('/satellite', async (req,res,next)=>{
     const walkerParams = req.body.walkerParams
     // 65 - 122, 0 - 9
     const czmlId = `${Math.floor(Math.random() * 58) + 65}_${Math.floor(Math.random() * 10)}`
-    const job = workQueue.add({walkerParams:walkerParams,czmlId:czmlId})
+    await queue.add('walker_params',{walkerParams:walkerParams,czmlId:czmlId})
     res.send({czmlId:czmlId})
 })
 
