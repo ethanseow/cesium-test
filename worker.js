@@ -36,6 +36,7 @@ const worker = new Worker('python-queue' ,async (job)=>{
     await exec(command,(error,stdout,stderr)=>{
       console.log(stdout)
       console.log(czmlId)
+      console.log(stderr)
         return({
             czmlId:czmlId,
             czmlData:stdout,

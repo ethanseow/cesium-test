@@ -13,6 +13,10 @@ Queue(queueName needed to talk with worker in constructor, {connection: ioRedisC
 await queue.add(needJobName, {data})
 
 in heroku remote by default we can see process.env.{} but in local we need to first require the dotenv package
+
+heroku prod needs to use REDIS_TLS_URL, make sure that anything that ref this env var (.env) is the correct heroku REDIS_TLS_URL
+
+you can see config vars in heroku settings
 */
 
 const express = require('express');
