@@ -41,10 +41,10 @@ const homeRouters = require('./routes/home');
 const PORT = process.env.PORT || 3000
 
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
-console.log(REDIS_URL)
+const REDIS_TLS_URL = process.env.REDIS_TLS_URL || 'redis://127.0.0.1:6379'
+console.log(REDIS_TLS_URL)
 const redisConnection =  new Redis(
-    REDIS_URL,{tls:{rejectUnauthorized:false}}
+    REDIS_TLS_URL,{tls:{rejectUnauthorized:false}}
 )
 const queue =  new Queue('python-queue',{connection:redisConnection})
 app.use(express.json())

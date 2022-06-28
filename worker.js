@@ -6,10 +6,10 @@ const util = require('util')
 const exec = util.promisify(require('child_process').exec)
 require('dotenv').config()
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+const REDIS_TLS_URL = process.env.REDIS_TLS_URL || 'redis://127.0.0.1:6379'
 
 const redisConnection =  new Redis(
-    REDIS_URL,{tls:{rejectUnauthorized:false}}
+    REDIS_TLS_URL,{tls:{rejectUnauthorized:false}}
 )
 
 const worker = new Worker('python-queue' ,async (job)=>{
