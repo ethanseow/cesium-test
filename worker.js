@@ -3,6 +3,7 @@ const { createNewObject } = require('./singleton')
 const {Job, Queue, Worker, RedisConnection} = require('bullmq')
 const Redis = require('ioredis')
 const util = require('util')
+const { resolve } = require('path')
 const exec = util.promisify(require('child_process').exec)
 require('dotenv').config()
 
@@ -33,22 +34,19 @@ const worker = new Worker('python-queue' ,async (job)=>{
     const command = `python ./SatLib/walker_script.py ${preprocessedParams}`
     //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     console.log(command)
-    await exec(command,(error,stdout,stderr)=>{
+    exec(command,(error,stdout,stderr)=>{
       //console.log(stdout)
       //console.log(czmlId)
       //console.log(stderr)
       console.log('completed the command')
-        return({
-            czmlId:czmlId,
-            czmlData:stdout,
-            'error':error,
-            'stderr':stderr
-        });
+      return {czmlId:'123',czmlData:'data'}
     })
   },{connection:redisConnection}
 ) 
-worker.on('completed',async(job,result)=>{
-    const { czmlId, czmlData } = result
+
+worker.on('completed',async(job)=>{
+    const { czmlId, czmlData } = returnvalue
+    
 
     console.log('completed in server side')
     //console.log(czmlId);
@@ -58,3 +56,7 @@ worker.on('completed',async(job,result)=>{
     // perhaps has to do with different database?
     createNewObject(czmlId,czmlData)
 });
+
+worker.on('failed',(job,error)=>{
+  console.log(error)
+})

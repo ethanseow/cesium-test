@@ -50,6 +50,9 @@ console.log(REDIS_TLS_URL)
 const redisConnection =  new Redis(
     REDIS_TLS_URL,{tls:{rejectUnauthorized:false}}
 )
+
+const dbRedis = new Redis(HEROKU_REDIS_TLS_COLOR, {tls:{rejectUnauthorized:false}})
+
 const queue =  new Queue('python-queue',{connection:redisConnection})
 app.use(express.json())
 app.use(express.static('public'))
@@ -67,12 +70,21 @@ app.post('/satellite', async (req,res,next)=>{
 
 app.get('/jobs/:id',(req,res,next) => {
     const{id} = req.params
-    const db = getDbObject()
-    if(db.hasOwnProperty(id)){
-        res.send({finishedProcessing:true,'czmlData':db[id]});
-    }else{
+    dbRedis.get(id)
+    .then((result)=>{
+        if(result === null){
+            console.log('got no result')
+            res.send({finishedProcessing:false})
+        }else{
+            console.log('got a result')
+            console.log(result)
+            res.send({finishedProcessing:true,'czmlData':result});
+        }
+    }).catch((error)=>{
+        console.log(error)
         res.send({finishedProcessing:false})
-    }
+    })
+    console.log('after db get request')
 })
 
 app.get('/test-getdbobject',(req,res)=>{
