@@ -8,10 +8,13 @@ const exec = util.promisify(require('child_process').exec)
 require('dotenv').config()
 
 const REDIS_TLS_URL = process.env.REDIS_TLS_URL || 'redis://127.0.0.1:6379'
+const HEROKU_REDIS_YELLOW_TLS_URL = process.env.HEROKU_REDIS_YELLOW_TLS_URL || 'redis://127.0.0.1:6379'
 
 const redisConnection =  new Redis(
     REDIS_TLS_URL,{tls:{rejectUnauthorized:false}}
 )
+
+const dbRedis = new Redis(HEROKU_REDIS_YELLOW_TLS_URL, {tls:{rejectUnauthorized:false}})
 
 const worker = new Worker('python-queue' ,async (job)=>{
     console.log('job added')
@@ -31,7 +34,7 @@ const worker = new Worker('python-queue' ,async (job)=>{
     }
     const preprocessedParams = parseBody(walkerParams)
 
-    const command = `python ./SatLib/walker_script.py ${preprocessedParams}`
+    const command = `python test-python ${preprocessedParams}`
     //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     console.log(command)
     exec(command,(error,stdout,stderr)=>{
@@ -39,6 +42,7 @@ const worker = new Worker('python-queue' ,async (job)=>{
       //console.log(czmlId)
       //console.log(stderr)
       console.log('completed the command')
+      dbRedis.set(czmlId,`this is ${czmlId}`)
       return {czmlId:'123',czmlData:'data'}
     })
   },{connection:redisConnection}

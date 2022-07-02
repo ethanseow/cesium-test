@@ -17,6 +17,8 @@ in heroku remote by default we can see process.env.{} but in local we need to fi
 heroku prod needs to use REDIS_TLS_URL, make sure that anything that ref this env var (.env) is the correct heroku REDIS_TLS_URL
 
 you can see config vars in heroku settings
+
+make sure to run both color redis and primary redis for it all to work
 */
 
 const express = require('express');
@@ -46,12 +48,13 @@ const PORT = process.env.PORT || 3000
 
 
 const REDIS_TLS_URL = process.env.REDIS_TLS_URL || 'redis://127.0.0.1:6379'
+const HEROKU_REDIS_YELLOW_TLS_URL = process.env.HEROKU_REDIS_YELLOW_TLS_URL || 'redis://127.0.0.1:6379'
 console.log(REDIS_TLS_URL)
 const redisConnection =  new Redis(
     REDIS_TLS_URL,{tls:{rejectUnauthorized:false}}
 )
 
-const dbRedis = new Redis(HEROKU_REDIS_TLS_COLOR, {tls:{rejectUnauthorized:false}})
+const dbRedis = new Redis(HEROKU_REDIS_YELLOW_TLS_URL, {tls:{rejectUnauthorized:false}})
 
 const queue =  new Queue('python-queue',{connection:redisConnection})
 app.use(express.json())
@@ -87,14 +90,35 @@ app.get('/jobs/:id',(req,res,next) => {
     console.log('after db get request')
 })
 
-app.get('/test-getdbobject',(req,res)=>{
-    res.send({db:getDbObject()})
+app.get('/test-getdbobject/:id',(req,res)=>{
+    // change this to be query param and not path
+    const{id} = req.params
+    console.log(id)
+    let dbData = null
+    let finishedProcessing = false
+    dbRedis.get(id)
+    .then((result)=>{
+        if(result === null){
+            console.log('got no result')
+        }else{
+            console.log('got a result')
+            console.log(result)
+            finishedProcessing = true
+            dbData = result
+        }
+        console.log('after db get request')
+        res.send({finishedProcessing:finishedProcessing,czmlData:dbData})
+    }).catch((error)=>{
+        console.log(error)
+    })
+
 })
 
-app.post('/test-createnewobject',(req,res)=>{
+app.post('/test-createnewobject',async (req,res)=>{
     const {id, data} = req.body
-    createNewObject(id,data)
-    res.send({db:getDbObject()})
+    await dbRedis.set(id,`this is ${id}`)
+    const dbData = await dbRedis.get(id)
+    res.send({data:dbData})
 })
 
 app.listen(PORT, async (error)=>{
