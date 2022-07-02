@@ -38,7 +38,7 @@ const getCzmlatInterval = (id) => {
                 
                 let { czmlData:czml } = data
                 czml = JSON.parse(czml)
-                console.log(czml)
+                // console.log(czml)
                 Cesium.CzmlDataSource.load(czml)
                 .then(data =>{
                         viewer.dataSources.add(data)

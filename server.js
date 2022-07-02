@@ -73,21 +73,24 @@ app.post('/satellite', async (req,res,next)=>{
 
 app.get('/jobs/:id',(req,res,next) => {
     const{id} = req.params
+    console.log(id)
+    let dbData = null
+    let finishedProcessing = false
     dbRedis.get(id)
     .then((result)=>{
         if(result === null){
             console.log('got no result')
-            res.send({finishedProcessing:false})
         }else{
             console.log('got a result')
             console.log(result)
-            res.send({finishedProcessing:true,'czmlData':result});
+            finishedProcessing = true
+            dbData = result
         }
+        console.log('after db get request')
+        res.send({finishedProcessing:finishedProcessing,czmlData:dbData})
     }).catch((error)=>{
         console.log(error)
-        res.send({finishedProcessing:false})
     })
-    console.log('after db get request')
 })
 
 app.get('/test-getdbobject/:id',(req,res)=>{

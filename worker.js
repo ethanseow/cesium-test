@@ -34,32 +34,20 @@ const worker = new Worker('python-queue' ,async (job)=>{
     }
     const preprocessedParams = parseBody(walkerParams)
 
-    const command = `python test-python ${preprocessedParams}`
+    const command = `python ./Satlib/walker_script.py ${preprocessedParams}`
     //done(null,{czmlId:czmlId,czmlData:'stdout here', 'stderr':'stderr here', 'error':'error here'})
     console.log(command)
     exec(command,(error,stdout,stderr)=>{
-      //console.log(stdout)
-      //console.log(czmlId)
+      // console.log(stdout)
+      // console.log(czmlId)
       //console.log(stderr)
       console.log('completed the command')
-      dbRedis.set(czmlId,`this is ${czmlId}`)
+      dbRedis.set(czmlId,stdout)
       return {czmlId:'123',czmlData:'data'}
     })
   },{connection:redisConnection}
 ) 
 
-worker.on('completed',async(job)=>{
-    const { czmlId, czmlData } = returnvalue
-    
-
-    console.log('completed in server side')
-    //console.log(czmlId);
-    //console.log(czmlData)
-
-    // czmlData exists in result obj, but not creating new object
-    // perhaps has to do with different database?
-    createNewObject(czmlId,czmlData)
-});
 
 worker.on('failed',(job,error)=>{
   console.log(error)
