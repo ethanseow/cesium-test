@@ -23,18 +23,30 @@ satelliteInputs.onsubmit = (e) => {
     })
     .then(response => response.json())
     .then((data)=> {
-        console.log(data)
-        let { stdout:czml, error, stderr} = data
-        czml = JSON.parse(czml)
-        console.log(czml)
-        /*
-            sending raw file works
-            sending in memory breaks
-        */
-       Cesium.CzmlDataSource.load(czml)
-       .then(data =>{
-            viewer.dataSources.add(data)
-       });
-       
+        const { czmlId } = data;
+        getCzmlatInterval(czmlId);
     })
-}   
+}
+
+const getCzmlatInterval = (id) => {
+    const intervalId = setInterval(()=>{
+        fetch(`/jobs/${id}`)
+        .then(response => response.json())
+        .then((data)=>{
+            const { finishedProcessing } = data
+            if(finishedProcessing){        
+                
+                let { czmlData:czml } = data
+                czml = JSON.parse(czml)
+                // console.log(czml)
+                Cesium.CzmlDataSource.load(czml)
+                .then(data =>{
+                        viewer.dataSources.add(data)
+                });
+                clearInterval(intervalId)
+            }else{
+                console.log('waiting')
+            }
+        })
+    },2500)
+}

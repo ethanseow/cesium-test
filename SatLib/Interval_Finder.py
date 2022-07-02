@@ -23,7 +23,6 @@ import matplotlib.pyplot as plt
 from poliastro.plotting.static import StaticOrbitPlotter
 from poliastro.plotting import OrbitPlotter3D, OrbitPlotter2D
 from poliastro.twobody.events import(NodeCrossEvent,)
-import seaborn as sns
 from astropy.coordinates import EarthLocation, GCRS, ITRS, CartesianRepresentation, SkyCoord
 import comms as com
 from copy import deepcopy

@@ -1,5 +1,6 @@
 {
     "configurations": [
+
         {
             "name": "Attach to server.js",
             "port": 9229,
@@ -30,6 +31,17 @@
             "program": "${workspaceFolder}/server.js",
             "type": "node"
         },
+        {
+            "name": "Launch nodemon server-test.js",
+            "request": "launch",
+            "runtimeExecutable": "nodemon",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/server-test.js",
+            "type": "node"
+        }
         
     ]
 }
