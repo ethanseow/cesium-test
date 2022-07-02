@@ -23,24 +23,9 @@ make sure to run both color redis and primary redis for it all to work
 
 const express = require('express');
 const app = express()
-const {Worker, Queue} = require('bullmq')
+const {Queue} = require('bullmq')
 const Redis = require('ioredis')
-const { getDbObject, createNewObject } = require('./singleton')
 require('dotenv').config()
-//const redis = require("redis");
-//const client = redis.createClient({url: process.env.REDIS_URL});
-
-/*
-client.on('ready',()=>{
-    console.log('redis server is ready')
-})
-
-client.on('error',(err)=>{
-    console.log(err)
-})
-*/
-
-const { exec } = require('child_process')
 
 const homeRouters = require('./routes/home');
 
@@ -49,21 +34,18 @@ const PORT = process.env.PORT || 3000
 
 const REDIS_TLS_URL = process.env.REDIS_TLS_URL || 'redis://127.0.0.1:6379'
 const HEROKU_REDIS_YELLOW_TLS_URL = process.env.HEROKU_REDIS_YELLOW_TLS_URL || 'redis://127.0.0.1:6379'
-console.log(REDIS_TLS_URL)
-const redisConnection =  new Redis(
-    REDIS_TLS_URL,{tls:{rejectUnauthorized:false}}
-)
+const redisConnection =  new Redis(REDIS_TLS_URL,{tls:{rejectUnauthorized:false}})
 
 const dbRedis = new Redis(HEROKU_REDIS_YELLOW_TLS_URL, {tls:{rejectUnauthorized:false}})
 
 const queue =  new Queue('python-queue',{connection:redisConnection})
+
 app.use(express.json())
 app.use(express.static('public'))
 
 app.use('/',homeRouters)
 
 app.post('/satellite', async (req,res,next)=>{
-    console.log('received a request')
     const walkerParams = req.body.walkerParams
     // 65 - 122, 0 - 9
     const czmlId = `${Math.floor(Math.random() * 58) + 65}_${Math.floor(Math.random() * 10)}`
@@ -73,65 +55,22 @@ app.post('/satellite', async (req,res,next)=>{
 
 app.get('/jobs/:id',(req,res,next) => {
     const{id} = req.params
-    console.log(id)
     let dbData = null
     let finishedProcessing = false
     dbRedis.get(id)
     .then((result)=>{
-        if(result === null){
-            console.log('got no result')
-        }else{
-            console.log('got a result')
-            console.log(result)
+        if(result !== null){
             finishedProcessing = true
             dbData = result
         }
-        console.log('after db get request')
         res.send({finishedProcessing:finishedProcessing,czmlData:dbData})
     }).catch((error)=>{
         console.log(error)
     })
 })
 
-app.get('/test-getdbobject/:id',(req,res)=>{
-    // change this to be query param and not path
-    const{id} = req.params
-    console.log(id)
-    let dbData = null
-    let finishedProcessing = false
-    dbRedis.get(id)
-    .then((result)=>{
-        if(result === null){
-            console.log('got no result')
-        }else{
-            console.log('got a result')
-            console.log(result)
-            finishedProcessing = true
-            dbData = result
-        }
-        console.log('after db get request')
-        res.send({finishedProcessing:finishedProcessing,czmlData:dbData})
-    }).catch((error)=>{
-        console.log(error)
-    })
-
-})
-
-app.post('/test-createnewobject',async (req,res)=>{
-    const {id, data} = req.body
-    await dbRedis.set(id,`this is ${id}`)
-    const dbData = await dbRedis.get(id)
-    res.send({data:dbData})
-})
 
 app.listen(PORT, async (error)=>{
-    /*
-    await client.connect()
-
-    await client.set('key', 'value');
-    const value = await client.get('key');
-    console.log(value)
-    */
     if(error){
         console.log(error)
     }else{

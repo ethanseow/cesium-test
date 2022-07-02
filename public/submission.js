@@ -1,8 +1,7 @@
 const satelliteInputs = document.forms['satelliteInputs']
-console.log('hello world')
 satelliteInputs.onsubmit = (e) => {
     e.preventDefault()
-    // change dummy variables to actual data later
+    
     const i = satelliteInputs.elements['i'].value
     const p = satelliteInputs.elements['p'].value
     const t = satelliteInputs.elements['t'].value
@@ -10,7 +9,6 @@ satelliteInputs.onsubmit = (e) => {
     const f = satelliteInputs.elements['f'].value
     const dist_threshold = satelliteInputs.elements['dist_threshold'].value
 
-    // think about fetch and how the site would update its simple.czml file
     viewer.dataSources.removeAll()
     const headers = new Headers({
         'Content-Type':'application/json'
@@ -38,7 +36,6 @@ const getCzmlatInterval = (id) => {
                 
                 let { czmlData:czml } = data
                 czml = JSON.parse(czml)
-                // console.log(czml)
                 Cesium.CzmlDataSource.load(czml)
                 .then(data =>{
                         viewer.dataSources.add(data)
