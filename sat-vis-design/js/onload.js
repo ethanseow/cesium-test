@@ -2416,7 +2416,7 @@ const simple = [
 $(document).ready(() => {
     var submitButton = $('#submitButton')
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhZDJlZjUzOC05NTk5LTRlNjEtYjQzZS00YWM5N2ZiYWIyNDUiLCJpZCI6OTc5ODQsImlhdCI6MTY1NTQ4NDU5OX0.kwtnbKrsGyQq2bq1C0st-oyXj8yBPhS42LBliNP-F14'
-    let viewer = new Cesium.Viewer("cesiumContainer", {
+    var viewer = new Cesium.Viewer("cesiumContainer", {
         shouldAnimate: true,
     });
     const defaultDataSource = Cesium.CzmlDataSource.load(simple)
@@ -2425,26 +2425,65 @@ $(document).ready(() => {
     );
 
     submitButton.on('click',()=>{
-        onSubmit()
+        onSubmit(viewer)
     })
+    
+    /*
+    input_dict = {
+        'i': 60, 
+        't': 6, 
+        'p': 2, 
+        'f': 1, 
+        'alt': 600, 
+        'time': '2022-06-08T00:00:00', 
+        'prop_dur': 1, 
+        'dist_threshold': None, 
+        'elev_threshold': None, 
+        'conicSensorAngle': None, 
+        'GS_pos': [[10, 10], [40, 40], [60, 60], [100, 100], [150, 150]]}
+    */
+    /*
+    var commThresh = document.getElementById('commThreshSlider')
+    commThresh.value = null
+
+    var conicSensor = document.getElementById('conicSensorSlider')
+    conicSensor.value = null
+    var gsThresh = document.getElementById('gsThreshSlider')
+    gsThresh.value = null
+    */
+    var IWalker = document.getElementById('IWalker')
+    IWalker.value = "60"
+    var TWalker = document.getElementById('TWalker')
+    TWalker.value = "6"
+    var PWalker = document.getElementById('PWalker')
+    PWalker.value = "2"
+    var FWalker = document.getElementById('FWalker')
+    FWalker.value = "1"
+    var AltWalker = document.getElementById('AltWalker')
+    AltWalker.value = "600"
+    var propDur = document.getElementById('propDur')
+    propDur.value ="1"
+    var calendarField = document.getElementById('calendarField')
+    var groundStationField = document.getElementById('groundStationField')
+    groundStationField.value = '[[10,10],[40,40],[60,60],[100,100],[150,150]]'
 })
 
-const onSubmit = () => {
-    var commThresh = document.getElementById('commThreshSlider').value
+const onSubmit = (viewer) => {
+    let commThresh = document.getElementById('commThreshSlider').value
 
-    var conicSensor = document.getElementById('conicSensorSlider').value
+    let conicSensor = document.getElementById('conicSensorSlider').value
 
-    var gsThresh = document.getElementById('gsThreshSlider').value
+    let gsThresh = document.getElementById('gsThreshSlider').value
 
-    var IWalker = document.getElementById('IWalker').value
-    var TWalker = document.getElementById('TWalker').value
-    var PWalker = document.getElementById('PWalker').value
-    var FWalker = document.getElementById('FWalker').value
-    var AltWalker = document.getElementById('AltWalker').value
-    var propDur = document.getElementById('propDur').value
-    var calendarField = document.getElementById('calendarField').value
+    let IWalker = document.getElementById('IWalker').value
+    let TWalker = document.getElementById('TWalker').value
+    let PWalker = document.getElementById('PWalker').value
+    let FWalker = document.getElementById('FWalker').value
+    let AltWalker = document.getElementById('AltWalker').value
+    let propDur = document.getElementById('propDur').value
+    let calendarField = document.getElementById('calendarField').value
     
-    var groundStationField = document.getElementById('groundStationField').value
+    let groundStationField = document.getElementById('groundStationField').value
     const parseGroundStations = (text) => {
         const regex = /[-0-9]+(\.)?[-0-9]+/g
         const coords = text.match(regex)
@@ -2477,9 +2516,14 @@ const onSubmit = () => {
         f:FWalker,
         alt:AltWalker,
         prop_dur:propDur,
+        time:calendarField,
         dist_threshold:commThresh,
         elev_threshold:gsThresh,
-        conicSensorAngle:conicSensor
+        conicSensorAngle:conicSensor,
+        //dist_threshold:null,
+        //elev_threshold:null,
+        //conicSensorAngle:null,
+        GS_pos:groundStationField
     }
 
     viewer.dataSources.removeAll()
@@ -2505,7 +2549,7 @@ const onSubmit = () => {
             .then((data)=>{
                 const { finishedProcessing } = data
                 if(finishedProcessing){        
-                    
+                    //console.log(data)
                     let { czmlData:czml } = data
                     czml = JSON.parse(czml)
                     Cesium.CzmlDataSource.load(czml)

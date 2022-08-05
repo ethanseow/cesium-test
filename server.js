@@ -32,8 +32,10 @@ const homeRouters = require('./routes/home');
 const PORT = process.env.PORT || 3000
 
 
-const REDIS_TLS_URL = process.env.REDIS_TLS_URL || 'redis://127.0.0.1:6379'
-const HEROKU_REDIS_YELLOW_TLS_URL = process.env.HEROKU_REDIS_YELLOW_TLS_URL || 'redis://127.0.0.1:6379'
+const REDIS_TLS_URL = process.env.REDIS_TLS_URL
+const HEROKU_REDIS_YELLOW_TLS_URL = process.env.HEROKU_REDIS_YELLOW_TLS_URL
+console.log(REDIS_TLS_URL);
+console.log(HEROKU_REDIS_YELLOW_TLS_URL);
 const redisConnection =  new Redis(REDIS_TLS_URL,{tls:{rejectUnauthorized:false}})
 
 const dbRedis = new Redis(HEROKU_REDIS_YELLOW_TLS_URL, {tls:{rejectUnauthorized:false}})
@@ -47,7 +49,6 @@ app.use('/',homeRouters)
 
 app.post('/satellite', async (req,res,next)=>{
     const walkerParams = req.body.walkerParams
-    // 65 - 122, 0 - 9
     const czmlId = `${Math.floor(Math.random() * 58) + 65}_${Math.floor(Math.random() * 10)}`
     await queue.add('walker_params',{walkerParams:walkerParams,czmlId:czmlId})
     res.send({czmlId:czmlId})

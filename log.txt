@@ -1,2 +1,29 @@
 8 - 4 - 2022
+what works:
 connected new frontend to this repo
+what broke:
+cannot connect to redis server from local heroku running
+
+8 - 5 - 2022
+error:
+Error: connect ETIMEDOUT
+2:35:05 PM web.1    |      at TLSSocket.<anonymous> (C:\Users\ethan\OneDrive\Desktop\Dev\cesium-test\node_modules\ioredis\built\Redis.js:168:41)
+2:35:05 PM web.1    |      at Object.onceWrapper (node:events:641:28)
+2:35:05 PM web.1    |      at TLSSocket.emit (node:events:527:28)
+2:35:05 PM web.1    |      at TLSSocket.Socket._onTimeout (node:net:516:8)
+2:35:05 PM web.1    |      at listOnTimeout (node:internal/timers:559:17)
+2:35:05 PM web.1    |      at processTimers (node:internal/timers:502:7) {
+2:35:05 PM web.1    |    errorno: 'ETIMEDOUT',
+2:35:05 PM web.1    |    code: 'ETIMEDOUT',
+2:35:05 PM web.1    |    syscall: 'connect'
+2:35:05 PM web.1    |  }
+fix:
+every so often, heroku will swap out the redis cli url - make sure the .env is up to date
+no issue on remote server because they don't take it from the .env file, they take it from the settings in heroku
+
+error:
+parsing for the new webscript is wonky
+fix:
+stringify the json -> put into parser in worker.js (remove one slash if done on online js editor)
+    -> test on idle json.loads(json_parse) -> test on python webScript.py {json without quote}
+
