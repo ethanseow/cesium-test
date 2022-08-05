@@ -20,7 +20,6 @@ from poliastro.twobody.events import(
 )
 # import cartopy.crs as ccrs
 
-import seaborn as sns
 import astropy.units as u
 import astropy
 from astropy.time import Time, TimeDelta
