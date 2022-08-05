@@ -3,7 +3,7 @@ const routers = express.Router()
 const path = require('path')
 
 routers.get(['/','/home'], (req,res,next) => {
-    res.sendFile(path.join(__dirname,'/../index.html'));
+    res.sendFile(path.join(__dirname,'/../sat-vis-design/index.html'));
 });
 
 module.exports = routers

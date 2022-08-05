@@ -42,7 +42,7 @@ const queue =  new Queue('python-queue',{connection:redisConnection})
 
 app.use(express.json())
 app.use(express.static('public'))
-
+app.use('/sat-vis-design',express.static('sat-vis-design'))
 app.use('/',homeRouters)
 
 app.post('/satellite', async (req,res,next)=>{
@@ -53,16 +53,17 @@ app.post('/satellite', async (req,res,next)=>{
     res.send({czmlId:czmlId})
 })
 
-app.get('/jobs/:id',(req,res,next) => {
+app.get('/jobs/:id',async (req,res,next) => {
     const{id} = req.params
     let dbData = null
     let finishedProcessing = false
     dbRedis.get(id)
-    .then((result)=>{
+    .then(async (result)=>{
         if(result !== null){
             finishedProcessing = true
             dbData = result
         }
+        await dbRedis.del(id)
         res.send({finishedProcessing:finishedProcessing,czmlData:dbData})
     }).catch((error)=>{
         console.log(error)

@@ -1,0 +1,170 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0 auto;
+  background-image: url("../images/background.png");
+  background-size: 100% 100%;
+  max-width: 1080px;
+  width: 72.5%;
+}
+
+.header {
+  display: grid;
+  grid-template-areas: "logo links";
+  grid-template-columns: 1fr 1.25fr;
+}
+.header .logo {
+  grid-area: "logo";
+  width: 20rem;
+}
+.header .links {
+  grid-area: "links";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header .links a {
+  padding: 1em;
+  font-size: 1.75rem;
+  text-decoration: none;
+  color: white;
+}
+
+.text-animation {
+  margin: 0.5em 0;
+  font-size: 5rem;
+  color: white;
+}
+
+#cesiumContainer {
+  margin: 0 auto;
+  margin-bottom: 3em;
+  padding: 0.4rem;
+  background-color: white;
+  border-radius: 0.5rem;
+}
+
+.sliderParams {
+  margin: 0 auto;
+}
+.sliderParams .slider {
+  display: grid;
+  grid-template-areas: "title question ." "slider slider sliderValue";
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr 1fr;
+}
+.sliderParams .slider p {
+  color: white;
+  font-size: 2rem;
+  grid-area: title;
+  margin: 0 0;
+}
+.sliderParams .slider svg {
+  grid-area: question;
+  justify-self: start;
+  align-self: center;
+  margin-left: 1.5em;
+}
+.sliderParams .slider input {
+  grid-area: slider;
+}
+.sliderParams .slider .sliderValue {
+  color: white;
+  font-size: 1.5rem;
+  grid-area: sliderValue;
+}
+
+.walker {
+  color: white;
+}
+.walker .textHeader {
+  font-size: 1.5rem;
+  text-align: center;
+}
+.walker .textHeader svg {
+  width: 0.75em;
+  height: 0.75em;
+}
+.walker .walkerInputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.walker .walkerInputs .walkerInput {
+  padding: 0.5em;
+}
+.walker .walkerInputs .walkerInput input {
+  width: 2em;
+}
+
+.epoch {
+  color: white;
+  display: grid;
+  grid-template-areas: "textHeader textHeader" "header ." "inputField1 inputField2";
+  grid-template-columns: 1fr 1fr;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+}
+.epoch .textHeader {
+  grid-area: textHeader;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.epoch .textHeader svg {
+  width: 0.75em;
+  height: 0.75em;
+}
+.epoch label {
+  grid-area: header;
+}
+.epoch #propDur {
+  grid-area: inputField1;
+}
+.epoch #calendarField {
+  grid-area: inputField2;
+}
+.epoch svg {
+  stroke: white;
+  fill: white;
+  justify-self: center;
+}
+
+.groundStations {
+  /*
+  display:grid;
+  grid-template-areas:
+  "title question"
+  "textbox textbox"
+  ;
+  */
+  margin: 0 auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.groundStations .title {
+  color: white;
+  margin: 0 auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 1.5rem;
+}
+
+.submit {
+  display: flex;
+  background-color: white;
+  padding: 0.5em;
+  font-size: 2rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+  justify-content: center;
+}/*# sourceMappingURL=main.css.map */
