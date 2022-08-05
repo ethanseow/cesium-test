@@ -51,7 +51,7 @@ body {
 }
 .sliderParams .slider {
   display: grid;
-  grid-template-areas: "title question ." "slider slider sliderValue";
+  grid-template-areas: "title question checkbox" "slider slider sliderValue";
   grid-template-columns: auto 1fr auto;
   grid-template-rows: 1fr 1fr;
 }
@@ -67,13 +67,19 @@ body {
   align-self: center;
   margin-left: 1.5em;
 }
-.sliderParams .slider input {
+.sliderParams .slider .sliderInput {
   grid-area: slider;
+}
+.sliderParams .slider .checkbox {
+  grid-area: checkbox;
+  justify-self: right;
+  width: 1.5em;
 }
 .sliderParams .slider .sliderValue {
   color: white;
   font-size: 1.5rem;
   grid-area: sliderValue;
+  justify-self: left;
 }
 
 .walker {

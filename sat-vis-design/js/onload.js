@@ -2484,6 +2484,13 @@ const onSubmit = (viewer) => {
     let calendarField = document.getElementById('calendarField').value
     
     let groundStationField = document.getElementById('groundStationField').value
+
+    let commCheckBox = document.getElementById('commCheckBox').checked
+    let conicCheckBox = document.getElementById('conicCheckBox').checked
+    let gsCheckBox = document.getElementById('gsCheckBox').checked
+
+
+
     const parseGroundStations = (text) => {
         const regex = /[-0-9]+(\.)?[-0-9]+/g
         const coords = text.match(regex)
@@ -2509,6 +2516,15 @@ const onSubmit = (viewer) => {
     FWalker = parseInt(FWalker)
     AltWalker = parseInt(AltWalker)
     propDur = parseInt(propDur)
+    if(!commCheckBox){
+        commThresh = null
+    }
+    if(!gsCheckBox){
+        gsThresh = null
+    }
+    if(!conicCheckBox){
+        conicCheckBox = null
+    }
     const params = {
         i:IWalker,
         t:TWalker,
@@ -2520,11 +2536,8 @@ const onSubmit = (viewer) => {
         dist_threshold:commThresh,
         elev_threshold:gsThresh,
         conicSensorAngle:conicSensor,
-        //dist_threshold:null,
-        //elev_threshold:null,
-        //conicSensorAngle:null,
         GS_pos:groundStationField
-    }
+    }   
 
     viewer.dataSources.removeAll()
     const headers = new Headers({
