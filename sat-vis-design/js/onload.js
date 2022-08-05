@@ -2549,7 +2549,7 @@ const onSubmit = (viewer) => {
             .then((data)=>{
                 const { finishedProcessing } = data
                 if(finishedProcessing){        
-                    //console.log(data)
+                    console.log(data)
                     let { czmlData:czml } = data
                     czml = JSON.parse(czml)
                     Cesium.CzmlDataSource.load(czml)

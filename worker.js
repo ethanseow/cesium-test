@@ -13,7 +13,7 @@ const dbRedis = new Redis(HEROKU_REDIS_YELLOW_TLS_URL, {tls:{rejectUnauthorized:
 const worker = new Worker('python-queue' ,async (job)=>{
     let { walkerParams, czmlId } = job.data
     const parseBody = (json) => {
-      //console.log(json)
+      console.log(json)
       let stringifiedJSON = JSON.stringify(json)
       let ret = ''
       for(var i = 0;i < stringifiedJSON.length;i++){
@@ -29,10 +29,10 @@ const worker = new Worker('python-queue' ,async (job)=>{
     const command = `python ./SatLib2/webScript.py ${preprocessedParams}`
     exec(command,(error,stdout,stderr)=>{
       dbRedis.set(czmlId,stdout)
-      //console.log('done')
-      //console.log(stdout)
-      //console.log(error)
-      //console.log(stderr)
+      console.log('done')
+      console.log(stdout)
+      console.log(error)
+      console.log(stderr)
       return 
     })
   },{connection:redisConnection}
