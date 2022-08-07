@@ -9,7 +9,7 @@
     <script src="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Cesium.js"></script>
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/sat-vis-design/js/onload.js"></script>
+    <script src="/sat-vis-design/js/onload.js" type="module"=></script>
 </head>
 
 <body>
@@ -37,7 +37,7 @@
         Visualize the possibilities
     </div>
     <div id="cesiumContainer" class="fullSize">
-        <div class="loading"></div>
+        <div id='loadingScreen' class="loading"><p>Loading...</p></div>
     </div>
         <div class="sliderParams">
         <div class="slider">
@@ -131,6 +131,6 @@
 
 <!--
 <script src="/sat-vis-design/js/sliders.js"></script>
-<script src="/sat-vis-design/js/onload.js"></script>
+<script src="/sat-vis-design/js/onload.js" type='module'></script>
 <link rel="stylesheet" href="/sat-vis-design/css/main.css">
 -->

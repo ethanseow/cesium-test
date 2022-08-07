@@ -173,4 +173,22 @@ body {
   width: fit-content;
   margin: 0 auto;
   justify-content: center;
+}
+
+#cesiumContainer {
+  position: relative;
+}
+#cesiumContainer .loading {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 97.2%;
+  position: absolute;
+  z-index: 999;
+  opacity: 0.9;
+  background-color: white;
+  width: 98.9%;
+}
+#cesiumContainer .loading p {
+  font-size: 5rem;
 }/*# sourceMappingURL=main.css.map */
