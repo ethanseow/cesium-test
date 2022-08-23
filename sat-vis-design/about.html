@@ -5,11 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
-    <link rel="stylesheet" href="/sat-vis-design/css/main.css">
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Cesium.js"></script>
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/sat-vis-design/js/onload.js" type="module" defer></script>
+    <link rel="stylesheet" href="/sat-vis-design/css/about.css">
 </head>
 
 <body>
@@ -30,121 +26,75 @@
             <a href="/">Home</a>
             <a href="/about">About</a>
         </div>        
-
     </div>
-    <div class="text-animation">
-        <p class="line-1 text" id="demo">
-        </p>
+    <div class="intro">
+            <h3 class="fullName">
+                Manwei Chan
+            </h3>
+            <img class = "pic" src="/sat-vis-design/images/manwei.png">
+            <div class="info">
+                <p class="desc">
+                    Manwei is the project lead for the satellite visualizer. He is also an NSF Fellow and PhD Candidate in Aerospace Engineering at MIT, studying responsive, remote sensing satellite constellations. He wants to mature the commercial space ecosystem, eventually allowing more people and projects to utilize space. Manwei decided to pursue this particular satellite visualizer to help make his research more accessible to the general public. Outside of academics he is involved with STEM outreach, organizing the MIT Space Seminar, MIT SpaceTech, and SGAC Fusion Forum, events geared toward young professionals and designed to inspire future generations of space enthusiasts. In his free time, he likes to ski, hike, and play football (soccer).
+                </p>
+                <p class="links">
+                    LinkedIn: https://www.linkedin.com/in/manweichan/
+                    </br>
+                    </br>
+                    Website: https://manweichan.com/
+                    </br>
+                    </br>
+                    Instagram: https://www.instagram.com/themanwei/
+                </p>
+            </div>
     </div>
-    <div id="cesiumContainer" class="fullSize">
-        <div id='loadingScreen' class="loading"><p>Loading...</p></div>
-        <div id="errorScreen" class="error"><p id="errorMessage">You have the following errors:</p></div>
+    <div class="intro">
+            <h3 class="fullName">
+                Daniel P Monaghan
+            </h3>
+            <img class = "pic" src="/sat-vis-design/images/daniel.png">
+            <div class="info">
+                <p class="desc">
+                    Daniel became part of the team during January of 2022. He is an undergraduate student studying at MIT and majors in aerospace engineering. He helped code and debug the visualizer and brainstormed the various applications and implementations of our project. He also helped strategize the plan and goals of the project.
+                </p>
+                <p class="links">
+                    LinkedIn: https://www.linkedin.com/in/daniel-monaghan-002a031b4/
+                    </br>
+                    </br>
+                </p>
+            </div>
     </div>
-        <div class="sliderParams">
-        <div class="slider">
-            <p>Intersatellite Communication Threshold</p>
-            <input type="checkbox" class='checkbox'id="commCheckBox">
-            <svg id='ISQuestion' class="question" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 0C7.61016 0 0 7.61016 0 17C0 26.3898 7.61016 34 17 34C26.3898 34 34 26.3898 34 17C34 7.61016 26.3898 0 17 0ZM17 26.5625C15.8047 26.5625 14.875 25.6328 14.875 24.4375C14.875 23.2422 15.7449 22.3125 17 22.3125C18.1355 22.3125 19.125 23.2422 19.125 24.4375C19.125 25.6328 18.1355 26.5625 17 26.5625ZM21.5887 17.1328L18.5938 18.9922V19.125C18.5938 19.9883 17.8633 20.7188 17 20.7188C16.1367 20.7188 15.4062 19.9883 15.4062 19.125V18.0625C15.4062 17.5312 15.6719 17 16.2031 16.668L19.9883 14.4102C20.4531 14.1445 20.7188 13.6797 20.7188 13.1484C20.7188 12.3516 19.9949 11.6875 19.198 11.6875H15.8047C14.948 11.6875 14.3438 12.3516 14.3438 13.1484C14.3438 14.0117 13.6133 14.7422 12.75 14.7422C11.8867 14.7422 11.1562 14.0117 11.1562 13.1484C11.1562 10.5586 13.2148 8.5 15.7449 8.5H19.1383C21.8477 8.5 23.9062 10.5586 23.9062 13.1484C23.9062 14.7422 23.043 16.2695 21.5887 17.1328Z" fill="white"/>
-            </svg>
-            <input type="range" min="0" max="5000" value="2500" class="sliderInput" id="commThreshSlider">
-            <p class="sliderValue" id="commThreshValue"></p>
-        </div>
-        <div class="slider">
-            <p>Conic Sensors</p>
-            <input type="checkbox" class='checkbox' id="conicCheckBox">
-            <svg class="question" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 0C7.61016 0 0 7.61016 0 17C0 26.3898 7.61016 34 17 34C26.3898 34 34 26.3898 34 17C34 7.61016 26.3898 0 17 0ZM17 26.5625C15.8047 26.5625 14.875 25.6328 14.875 24.4375C14.875 23.2422 15.7449 22.3125 17 22.3125C18.1355 22.3125 19.125 23.2422 19.125 24.4375C19.125 25.6328 18.1355 26.5625 17 26.5625ZM21.5887 17.1328L18.5938 18.9922V19.125C18.5938 19.9883 17.8633 20.7188 17 20.7188C16.1367 20.7188 15.4062 19.9883 15.4062 19.125V18.0625C15.4062 17.5312 15.6719 17 16.2031 16.668L19.9883 14.4102C20.4531 14.1445 20.7188 13.6797 20.7188 13.1484C20.7188 12.3516 19.9949 11.6875 19.198 11.6875H15.8047C14.948 11.6875 14.3438 12.3516 14.3438 13.1484C14.3438 14.0117 13.6133 14.7422 12.75 14.7422C11.8867 14.7422 11.1562 14.0117 11.1562 13.1484C11.1562 10.5586 13.2148 8.5 15.7449 8.5H19.1383C21.8477 8.5 23.9062 10.5586 23.9062 13.1484C23.9062 14.7422 23.043 16.2695 21.5887 17.1328Z" fill="white"/>
-            </svg>
-            <input type="range" min="0" max="180" value="90" class="sliderInput" id="conicSensorSlider">
-            <p class="sliderValue" id="conicSensorValue"></p>
-        </div>
-        <div class="slider">
-            <input type="checkbox" class="checkbox" id="gsCheckBox">
-            <p>GS to Satellite Communication Threshold</p>
-            <svg class="question" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 0C7.61016 0 0 7.61016 0 17C0 26.3898 7.61016 34 17 34C26.3898 34 34 26.3898 34 17C34 7.61016 26.3898 0 17 0ZM17 26.5625C15.8047 26.5625 14.875 25.6328 14.875 24.4375C14.875 23.2422 15.7449 22.3125 17 22.3125C18.1355 22.3125 19.125 23.2422 19.125 24.4375C19.125 25.6328 18.1355 26.5625 17 26.5625ZM21.5887 17.1328L18.5938 18.9922V19.125C18.5938 19.9883 17.8633 20.7188 17 20.7188C16.1367 20.7188 15.4062 19.9883 15.4062 19.125V18.0625C15.4062 17.5312 15.6719 17 16.2031 16.668L19.9883 14.4102C20.4531 14.1445 20.7188 13.6797 20.7188 13.1484C20.7188 12.3516 19.9949 11.6875 19.198 11.6875H15.8047C14.948 11.6875 14.3438 12.3516 14.3438 13.1484C14.3438 14.0117 13.6133 14.7422 12.75 14.7422C11.8867 14.7422 11.1562 14.0117 11.1562 13.1484C11.1562 10.5586 13.2148 8.5 15.7449 8.5H19.1383C21.8477 8.5 23.9062 10.5586 23.9062 13.1484C23.9062 14.7422 23.043 16.2695 21.5887 17.1328Z" fill="white"/>
-            </svg>
-            <input type="range" min="0" max="90" value="45" class="sliderInput" id="gsThreshSlider">
-            <p class="sliderValue" id="gsThreshValue"></p>
-        </div>
-        
+    <div class="intro">
+            <h3 class="fullName">
+                Jace Lu
+            </h3>
+            <img class = "pic" src="/sat-vis-design/images/manwei.png">
+            <div class="info">
+                <p class="desc">
+                    Jace became part of the team during January of 2022. She is an undergraduate student studying at MIT and majors in aerospace engineering with a minor in computer science. She was the main backend coder and debugger of the visualizer. Specifically, she worked on the code for the communication links and conic sensors. She also helped design and code the the base of the website. Outside of academics, she is a member of the MIT Sailing and Rocket Team. In her free time, she likes to lift weights, wrestle, and fish.
+                </p>
+                <p class="links">
+                    LinkedIn: https://www.linkedin.com/in/jace-lu-a669071b2/
+                    </br>
+                    </br>
+                    Instagram: https://www.instagram.com/_jace.lu/
+                </p>
+            </div>
     </div>
-    <div class="walker">
-        <div class="textHeader">
-            <span>Walker Input</span>
-            <svg class="question" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 0C7.61016 0 0 7.61016 0 17C0 26.3898 7.61016 34 17 34C26.3898 34 34 26.3898 34 17C34 7.61016 26.3898 0 17 0ZM17 26.5625C15.8047 26.5625 14.875 25.6328 14.875 24.4375C14.875 23.2422 15.7449 22.3125 17 22.3125C18.1355 22.3125 19.125 23.2422 19.125 24.4375C19.125 25.6328 18.1355 26.5625 17 26.5625ZM21.5887 17.1328L18.5938 18.9922V19.125C18.5938 19.9883 17.8633 20.7188 17 20.7188C16.1367 20.7188 15.4062 19.9883 15.4062 19.125V18.0625C15.4062 17.5312 15.6719 17 16.2031 16.668L19.9883 14.4102C20.4531 14.1445 20.7188 13.6797 20.7188 13.1484C20.7188 12.3516 19.9949 11.6875 19.198 11.6875H15.8047C14.948 11.6875 14.3438 12.3516 14.3438 13.1484C14.3438 14.0117 13.6133 14.7422 12.75 14.7422C11.8867 14.7422 11.1562 14.0117 11.1562 13.1484C11.1562 10.5586 13.2148 8.5 15.7449 8.5H19.1383C21.8477 8.5 23.9062 10.5586 23.9062 13.1484C23.9062 14.7422 23.043 16.2695 21.5887 17.1328Z" fill="white"/>
-            </svg>
-        </div>
-            <form class="walkerInputs">
-                <div class="walkerInput">
-                    <label for="IWalker">I</label>
-                    <input type="text" id="IWalker" name="IWalker" required>
-                </div>
-                <div class="walkerInput required">
-                    <label for="TWalker">T</label>
-                    <input type="text" id="TWalker" name="TWalker">
-                </div>
-                <div class="walkerInput required">
-                    <label for="PWalker">P</label>
-                    <input type="text" id="PWalker" name="PWalker">
-                </div>
-                <div class="walkerInput required">
-                    <label for="FWalker">F</label>
-                    <input type="text" id="FWalker" name="FWalker">
-                </div>
-                <div class="walkerInput required">
-                    <label for="AltWalker">Alt</label>
-                    <input type="text" id="AltWalker" name="AltWalker">
-                </div>
-                <input type="submit" id="hiddenSubmit">
-            </form>
-    </div>
-    <div class="epoch">
-        <div class="textHeader">
-            <span>Epoch</span>
-            <svg class="question" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 0C7.61016 0 0 7.61016 0 17C0 26.3898 7.61016 34 17 34C26.3898 34 34 26.3898 34 17C34 7.61016 26.3898 0 17 0ZM17 26.5625C15.8047 26.5625 14.875 25.6328 14.875 24.4375C14.875 23.2422 15.7449 22.3125 17 22.3125C18.1355 22.3125 19.125 23.2422 19.125 24.4375C19.125 25.6328 18.1355 26.5625 17 26.5625ZM21.5887 17.1328L18.5938 18.9922V19.125C18.5938 19.9883 17.8633 20.7188 17 20.7188C16.1367 20.7188 15.4062 19.9883 15.4062 19.125V18.0625C15.4062 17.5312 15.6719 17 16.2031 16.668L19.9883 14.4102C20.4531 14.1445 20.7188 13.6797 20.7188 13.1484C20.7188 12.3516 19.9949 11.6875 19.198 11.6875H15.8047C14.948 11.6875 14.3438 12.3516 14.3438 13.1484C14.3438 14.0117 13.6133 14.7422 12.75 14.7422C11.8867 14.7422 11.1562 14.0117 11.1562 13.1484C11.1562 10.5586 13.2148 8.5 15.7449 8.5H19.1383C21.8477 8.5 23.9062 10.5586 23.9062 13.1484C23.9062 14.7422 23.043 16.2695 21.5887 17.1328Z" fill="white"/>
-            </svg>
-        </div>
-        <label for="propDur">Propagation Duration</label>
-        <input type="text" name="propDur" id="propDur" placeholder="Days">
-        <input type="datetime-local" value="2022-06-08T00:00:00"name="calendarField" id="calendarField" placeholder="Enter a date">
-        <svg width="26" class="calendar" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.512451 27.9375C0.512451 28.5598 0.96669 29.0625 1.52893 29.0625H24.908C25.4702 29.0625 25.9244 28.5598 25.9244 27.9375V13.1719H0.512451V27.9375ZM24.908 3.46875H19.5714V1.21875C19.5714 1.06406 19.4571 0.9375 19.3173 0.9375H17.5385C17.3987 0.9375 17.2844 1.06406 17.2844 1.21875V3.46875H9.15252V1.21875C9.15252 1.06406 9.03817 0.9375 8.8984 0.9375H7.11957C6.9798 0.9375 6.86545 1.06406 6.86545 1.21875V3.46875H1.52893C0.96669 3.46875 0.512451 3.97148 0.512451 4.59375V10.7812H25.9244V4.59375C25.9244 3.97148 25.4702 3.46875 24.908 3.46875Z" fill="black"/>
-        </svg>
-    </div>
-
-    <div class="groundStations">
-        <div class="title">
-            <label for="groundStationField">Ground Stations</label>
-            <svg class="question" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 0C7.61016 0 0 7.61016 0 17C0 26.3898 7.61016 34 17 34C26.3898 34 34 26.3898 34 17C34 7.61016 26.3898 0 17 0ZM17 26.5625C15.8047 26.5625 14.875 25.6328 14.875 24.4375C14.875 23.2422 15.7449 22.3125 17 22.3125C18.1355 22.3125 19.125 23.2422 19.125 24.4375C19.125 25.6328 18.1355 26.5625 17 26.5625ZM21.5887 17.1328L18.5938 18.9922V19.125C18.5938 19.9883 17.8633 20.7188 17 20.7188C16.1367 20.7188 15.4062 19.9883 15.4062 19.125V18.0625C15.4062 17.5312 15.6719 17 16.2031 16.668L19.9883 14.4102C20.4531 14.1445 20.7188 13.6797 20.7188 13.1484C20.7188 12.3516 19.9949 11.6875 19.198 11.6875H15.8047C14.948 11.6875 14.3438 12.3516 14.3438 13.1484C14.3438 14.0117 13.6133 14.7422 12.75 14.7422C11.8867 14.7422 11.1562 14.0117 11.1562 13.1484C11.1562 10.5586 13.2148 8.5 15.7449 8.5H19.1383C21.8477 8.5 23.9062 10.5586 23.9062 13.1484C23.9062 14.7422 23.043 16.2695 21.5887 17.1328Z" fill="white"/>
-            </svg>
-        <br>
-        </div>
-        <textarea value="(10 10), (40 40), (60 60), (100 100), (150 150)" placeholder="[[10,10],[40,40]]" name="groundStationField" id="groundStationField" cols="30" rows="10"></textarea>
-    </div>
-    <div class="submit" id="submitButton">Submit</div>
-    <script src="/sat-vis-design/js/sliders.js"></script>
-    <div class="helper">
-        <div class="info">
-            <h2 class="infoHeader">
-                Ground Station (GS) to Satellite Communication Threshold
-            </h2>
-            <p class="helperDesc">
-                The minimum elevation angle (in degrees) the satellites have to make with the ground stations for communication to be viable.
-            </p>
-            <img class='helperImage' src = "/sat-vis-design/images/logo.svg">
-        <button class="closeHelper">Close</button>
-        </div>
+        <div class="intro">
+            <h3 class="fullName">
+                Ethan Seow
+            </h3>
+            <img class = "pic" src="/sat-vis-design/images/ethan.png">
+            <div class="info">
+                <p class="desc">
+                    Ethan joined the team in March 2022, interested in spearheading the web development aspect of this project. He is an undergraduate student at Boston University studying Computer Science and loves all things full stack development. His work as website designer has helped make our project more accessible to the larger aerospace community. Some of his other interests are reading, calisthenics, and playing basketball.
+                </p>
+                <p class="links">
+                    Linkedin: https://www.linkedin.com/in/ethan-seow-052a351a7/
+                    </br>
+                    </br>
+                </p>
+            </div>
     </div>
 </body>
 </html>
-
-<!--
-<script src="/sat-vis-design/js/sliders.js"></script>
-<script src="/sat-vis-design/js/onload.js" type='module'></script>
-<link rel="stylesheet" href="/sat-vis-design/css/main.css">
--->

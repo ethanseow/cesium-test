@@ -19,6 +19,20 @@ heroku prod needs to use REDIS_TLS_URL, make sure that anything that ref this en
 you can see config vars in heroku settings
 
 make sure to run both color redis and primary redis for it all to work
+
+issues:
+put in new cli redis env whenever you comeback to this project
+we switched the name of the app, may have some issues pushing
+use node server worker instead of heroku local
+
+quick start:
+
+heroku local
+heroku redis:cli redis-shallow-08520 --confirm sat-visualizer
+heroku redis:cli redis-fitted-19804 --confirm sat-visualizer
+npx nodemon server.js
+npx nodemon worker.js
+
 */
 
 const express = require('express');
@@ -56,6 +70,7 @@ app.post('/satellite', async (req,res,next)=>{
 
 app.get('/jobs/:id',async (req,res,next) => {
     const{id} = req.params
+    console.log(`getting jobs ${id}`)
     let dbData = null
     let finishedProcessing = false
     dbRedis.get(id)

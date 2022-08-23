@@ -22,7 +22,7 @@ body {
 .header .links {
   grid-area: "links";
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 .header .links a {
@@ -36,6 +36,35 @@ body {
   margin: 0.5em 0;
   font-size: 5rem;
   color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.text-animation .line-1 {
+  margin: 0;
+  border-right: 3px solid rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.text-animation .text {
+  -webkit-animation: blinkTextCursor 1000ms steps(23) infinite normal;
+          animation: blinkTextCursor 1000ms steps(23) infinite normal;
+}
+@-webkit-keyframes blinkTextCursor {
+  from {
+    border-right-color: rgb(255, 255, 255);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgb(255, 255, 255);
+  }
+  to {
+    border-right-color: transparent;
+  }
 }
 
 #cesiumContainer {
@@ -104,6 +133,9 @@ body {
 .walker .walkerInputs .walkerInput input {
   width: 2em;
 }
+.walker .walkerInputs #hiddenSubmit {
+  display: none;
+}
 
 .epoch {
   color: white;
@@ -162,6 +194,9 @@ body {
   width: fit-content;
   font-size: 1.5rem;
 }
+.groundStations textarea {
+  border: 0px solid white;
+}
 
 .submit {
   display: flex;
@@ -191,4 +226,63 @@ body {
 }
 #cesiumContainer .loading p {
   font-size: 5rem;
+}
+#cesiumContainer .error {
+  display: none;
+  height: 97.2%;
+  position: absolute;
+  z-index: 999;
+  opacity: 0.9;
+  background-color: lightsalmon;
+  width: 98.9%;
+}
+#cesiumContainer .error p {
+  font-size: 2rem;
+  margin-left: 2%;
+}
+
+.helper {
+  display: none;
+  position: fixed;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100vw;
+  justify-content: center;
+}
+.helper .info {
+  max-width: 1200px;
+  max-height: 300px;
+  padding: 0.5em;
+  display: grid;
+  grid-template-areas: "infoHeader infoHeader" "helperDesc helperImage" "closeHelper closeHelper";
+  color: white;
+  align-self: center;
+  background-color: black;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 3fr 20px;
+  width: 75%;
+  height: 50%;
+  border: 3px solid white;
+  border-radius: 10px;
+}
+.helper .info .infoHeader {
+  text-align: center;
+  grid-area: infoHeader;
+}
+.helper .info .helperDesc {
+  grid-area: helperDesc;
+  align-self: center;
+}
+.helper .info .helperImage {
+  grid-area: helperImage;
+  align-self: center;
+  justify-self: center;
+}
+.helper .info .closeHelper {
+  grid-area: closeHelper;
+  justify-self: center;
+  width: 7.5%;
 }/*# sourceMappingURL=main.css.map */

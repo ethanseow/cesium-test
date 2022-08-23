@@ -1,5 +1,4 @@
 import os
-from matplotlib.style import available
 import numpy as np
 from poliastro import constants
 from poliastro.earth import Orbit
